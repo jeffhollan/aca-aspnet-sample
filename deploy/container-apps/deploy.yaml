@@ -1,11 +1,15 @@
-# az containerapp create -n my-store -g mechanics-aca --yaml deploy/container-apps/deploy.yaml
+# az containerapp create -n my-store -g myRg --yaml deploy/container-apps/deploy.yaml
 type: Microsoft.Web/containerApps
 template:
   containers:
   - name: mystore
-    image: ghcr.io/jeffhollan/container-app-aspnet:v0.1
-kubeEnvironmentId: /subscriptions/411a9cd0-f057-4ae5-8def-cc1ea96a3933/resourceGroups/mechanics-aca/providers/Microsoft.Web/kubeEnvironments/mechanics-aca
+    image: ghcr.io/jeffhollan/container-app-aspnet:v0.2
+    env:
+    - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+      value: ''
+kubeEnvironmentId: /subscriptions/xxxx-xxxx-xxxx/resourceGroups/myRg/providers/Microsoft.Web/kubeEnvironments/env-name
 configuration:
+  activeRevisionsMode: multiple
   ingress:
     external: true
     targetPort: 80
